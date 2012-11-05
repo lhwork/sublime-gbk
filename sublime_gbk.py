@@ -17,19 +17,16 @@ def gbk2utf8(view):
 		
 		file_name = view.file_name().encode('utf-8')
 
-		tmp_file_name = urllib.quote_plus(os.path.basename(file_name))  + SEPERATOR + urllib.quote_plus(file_name)
-		tmp_file = os.path.join(TEMP_PATH, tmp_file_name)
-
-		f = file(tmp_file, 'w')
+		f = file(view.file_name(), 'w')
 		f.write(text.encode('utf8'))
 		f.close()
 
 		window = sublime.active_window()
 		
-		v = window.find_open_file(tmp_file)
+		v = window.find_open_file(file_name)
 
 		if(not v):
-			window.open_file(tmp_file)
+			window.open_file(file_name)
 
 		window.focus_view(view)
 		window.run_command('close')
